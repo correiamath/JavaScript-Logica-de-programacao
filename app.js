@@ -1,8 +1,22 @@
+let listaDeNumerosSorteados = [];
+let numeroLimite = 10;
 let numeroAleatorio = gerarNumeroAleatorio();
 let tentativas = 0;
 
 function gerarNumeroAleatorio() {
-  return parseInt(Math.random() * 10 + 1);
+  aleatorio = parseInt(Math.random() * numeroLimite + 1);
+  let tamanhoDaLista = listaDeNumerosSorteados.length;
+  if (tamanhoDaLista == numeroLimite) {
+    listaDeNumerosSorteados = [];
+  }
+
+  if (listaDeNumerosSorteados.includes(aleatorio)) {
+    return gerarNumeroAleatorio();
+  } else {
+    listaDeNumerosSorteados.push(aleatorio);
+    console.log(listaDeNumerosSorteados);
+    return aleatorio;
+  }
 }
 
 function exibirTextoNaTela(tag, texto) {
@@ -54,4 +68,5 @@ function novoJogo() {
   tentativas = 0;
   exibirMensagemInicial();
   document.getElementById("reiniciar").setAttribute("disabled", true);
+  document.getElementById("chute").removeAttribute("disabled");
 }

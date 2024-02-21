@@ -1,36 +1,57 @@
 let numeroAleatorio = gerarNumeroAleatorio();
-
-function alterarCampo(tag, texto) {
-  campo = document.querySelector(tag);
-  campo.innerHTML = texto;
-}
-
-alterarCampo("h1", "Jogo Secreto");
-alterarCampo("p", "Escolha um numero entre 1 e 10");
-
-function verificarChute() {
-  console.log(numeroAleatorio);
-  alert(comparar());
-}
+let tentativas = 0;
 
 function gerarNumeroAleatorio() {
   return parseInt(Math.random() * 10 + 1);
 }
 
-function comparar() {
-  let input = parseInt(document.querySelector("input").value);
-  let resultado;
+function exibirTextoNaTela(tag, texto) {
+  campo = document.querySelector(tag);
+  campo.innerHTML = texto;
+}
 
-  if (input > numeroAleatorio) {
-    resultado = "O valor inserido é maior que o número secreto";
-    alert(resultado);
-  } else if (input < numeroAleatorio) {
-    resultado = "O valor inserido é menor que o número secreto";
-    alert(resultado);
+function exibirMensagemInicial() {
+  exibirTextoNaTela("h1", "Jogo Secreto");
+  exibirTextoNaTela("p", "Escolha um numero entre 1 e 10");
+}
+
+exibirMensagemInicial();
+
+function verificarChute() {
+  let chute = document.querySelector("input").value;
+  tentativas++;
+
+  if (chute == numeroAleatorio) {
+    exibirTextoNaTela("h1", "Parabéns!!!");
+    let plural = tentativas > 1 ? "s" : "";
+    let mensagemTentativas = `Você descobriu o número aleatório com ${tentativas} tentativa${plural}!`;
+    exibirTextoNaTela("p", mensagemTentativas);
+    document.getElementById("reiniciar").removeAttribute("disabled");
+    document.getElementById("chute").setAttribute("disabled", true);
   } else {
-    resultado = "Você acertou!!!";
-    alert(resultado);
+    if (chute > numeroAleatorio) {
+      exibirTextoNaTela(
+        "p",
+        "O número aleatório é menor que este, tente novamente"
+      );
+    } else {
+      exibirTextoNaTela(
+        "p",
+        "O número aleatório é maior que este, tente novamente"
+      );
+    }
+    limparCampo();
   }
+}
 
-  return resultado;
+function limparCampo() {
+  chute = document.querySelector("input");
+  chute.value = "";
+}
+function novoJogo() {
+  numeroAleatorio = gerarNumeroAleatorio();
+  limparCampo();
+  tentativas = 0;
+  exibirMensagemInicial();
+  document.getElementById("reiniciar").setAttribute("disabled", true);
 }

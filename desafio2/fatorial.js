@@ -1,11 +1,12 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////
 //Calcular fatorial
-let fat = 6;
-
 function fatorial(x) {
-  for (let n = x - 1; n >= 1; n--) {
-    x *= n;
-  }
-  return x;
+    for (let i = x - 1; i >= 1; i--) {
+        x *= i;
+    }
+
+    console.log(x);
+    return x;
 }
-console.log(fatorial(fat));
+
+fatorial(6);
